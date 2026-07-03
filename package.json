@@ -1,0 +1,34 @@
+{
+  "name": "codex-quota-widget-rs",
+  "version": "1.4.0",
+  "description": "通过 Codex CLI 读取 Codex 额度的 Rust 版悬浮小组件。",
+  "author": "fengshi",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1420",
+    "build": "npm run build:frontend",
+    "build:frontend": "vite build",
+    "ci:install": "npm ci --prefer-offline --no-audit --no-fund",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:nsis": "tauri build --bundles nsis",
+    "updater:keygen": "pwsh -NoProfile -ExecutionPolicy Bypass -Command \"New-Item -ItemType Directory -Path certs -Force | Out-Null; tauri signer generate --write-keys certs/updater.key\"",
+    "tauri:build:nsis:updater": "tauri build --bundles nsis --config src-tauri/tauri.updater.conf.json",
+    "updater:latest": "node scripts/create-latest-json.mjs",
+    "release:github": "npm run tauri:build:nsis:updater && npm run updater:latest",
+    "tauri:build:mac:aarch64:updater": "tauri build --target aarch64-apple-darwin --bundles dmg,app --config src-tauri/tauri.updater.conf.json",
+    "tauri:build:mac:x64:updater": "tauri build --target x86_64-apple-darwin --bundles dmg,app --config src-tauri/tauri.updater.conf.json"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.7.1",
+    "@tauri-apps/plugin-updater": "^2.10.1",
+    "lucide": "^0.468.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "vite": "^7.0.0"
+  }
+}
